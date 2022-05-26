@@ -10,8 +10,7 @@ namespace App05MonoGame
     public enum GameStates
     {
         Starting,
-        PlayingLevel1,
-        PlayingLevel2,
+        PlayingLevel,
         Ending
     }
 
@@ -67,7 +66,6 @@ namespace App05MonoGame
         // Screens
 
         private StartScreen startScreen;
-        private CoinsScreen coinsScreen;
         private AsteroidsScreen asteroidsScreen;
 
         #endregion
@@ -139,15 +137,8 @@ namespace App05MonoGame
                     startScreen.Update(gameTime); 
                     break;
                 
-                // Coins Game
-                case GameStates.PlayingLevel1:
-                    if (coinsScreen == null)
-                        coinsScreen = new CoinsScreen(this);
-                    coinsScreen.Update(gameTime);
-                    break;
-                
                 // Asteroids Game
-                case GameStates.PlayingLevel2:
+                case GameStates.PlayingLevel:
                     if (asteroidsScreen == null)
                         asteroidsScreen = new AsteroidsScreen(this);
                     asteroidsScreen.Update(gameTime);
@@ -179,12 +170,7 @@ namespace App05MonoGame
                     startScreen.Draw(spriteBatch, gameTime);
                     break;
 
-                case GameStates.PlayingLevel1:
-                    if (coinsScreen != null)
-                        coinsScreen.Draw(spriteBatch, gameTime);
-                    break;
-
-                case GameStates.PlayingLevel2:
+                case GameStates.PlayingLevel:
                     if (asteroidsScreen != null)
                         asteroidsScreen.Draw(spriteBatch, gameTime);
                     break;

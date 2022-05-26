@@ -15,7 +15,6 @@ namespace App05MonoGame.Screens
         private Texture2D backgroundImage;
         private SpriteFont arialFont;
 
-        private Button coinsButton;
         private Button asteroidsButton;
 
         private List<string> instructions;
@@ -36,7 +35,6 @@ namespace App05MonoGame.Screens
 
             arialFont = game.Content.Load<SpriteFont>("fonts/arial");
             
-            SetupCoinsButton();
             SetupAsteroidsButton();
                 
         }
@@ -52,19 +50,6 @@ namespace App05MonoGame.Screens
             };
 
             asteroidsButton.click += StartAsteroidsGame;
-        }
-
-        private void SetupCoinsButton()
-        {
-            coinsButton = new Button(arialFont,
-                game.Content.Load<Texture2D>("Controls/button-icon-png-200"))
-            {
-                Position = new Vector2(1130, 580),
-                Text = "Coins",
-                Scale = 0.6f
-            };
-
-            coinsButton.click += StartCoinsGame;
         }
 
         /// <summary>
@@ -83,14 +68,9 @@ namespace App05MonoGame.Screens
             instructions.Add("The game is lost when...");
         }
 
-        private void StartCoinsGame(object sender, System.EventArgs e)
-        {
-            game.GameState = GameStates.PlayingLevel1;
-        }
-
         private void StartAsteroidsGame(object sender, System.EventArgs e)
         {
-            game.GameState = GameStates.PlayingLevel2;
+            game.GameState = GameStates.PlayingLevel;
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -106,13 +86,11 @@ namespace App05MonoGame.Screens
                     new Vector2(x, y), Color.White);
             }
 
-            coinsButton.Draw(spriteBatch, gameTime);
             asteroidsButton.Draw(spriteBatch, gameTime);
         }
 
         public void Update(GameTime gameTime)
         {
-            coinsButton.Update(gameTime);
             asteroidsButton.Update(gameTime);
         }
     }

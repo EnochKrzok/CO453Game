@@ -21,11 +21,17 @@ namespace App05MonoGame.Controllers
 
                 // Rotate and Move
 
-                TurnLeft = Keys.A,
-                TurnRight = Keys.D,
-                Forward = Keys.Space
+                TurnLeft = Keys.Left,
+                TurnRight = Keys.Right,
+                Forward = Keys.Up,
+
+                Rock = Keys.Q,
+                Paper = Keys.W,
+                Scissors = Keys.E
             };
         }
+
+        
 
         public Vector2 ChangeDirection(KeyboardState keyState)
         {
