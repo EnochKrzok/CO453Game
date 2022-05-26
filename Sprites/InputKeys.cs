@@ -9,6 +9,10 @@ namespace App05MonoGame.Sprites
     /// </summary>
     public class InputKeys
     {
+        internal Keys Rock;
+        internal Keys Scissors;
+        internal Keys Paper;
+
         public Keys Left { get; set; }
         public Keys Right { get; set; }
         public Keys Up { get; set; }

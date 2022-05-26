@@ -2,6 +2,7 @@
 using App05MonoGame.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace App05MonoGame.Screens
 {
@@ -19,12 +20,15 @@ namespace App05MonoGame.Screens
         private SpriteFont calibriFont;
 
         private PlayerSprite shipSprite;
-        private Sprite asteroidSprite;
+        private Sprite asteroidSpriteR;
+        private Sprite asteroidSpriteP;
+        private Sprite asteroidSpriteS;
 
         #endregion
         public AsteroidsScreen(App05Game game)
         {
             this.game = game;
+            
             LoadContent();
         }
 
@@ -47,21 +51,64 @@ namespace App05MonoGame.Screens
             pauseButton.click += PauseGame;
 
             SetupSpaceShip();
-            SetupAsteroid();
+
+            
+
+            SetupRock();
+            SetupScissors();
+            SetupPaper();
         }
 
         /// <summary>
         /// This is a single image sprite that rotates
         /// and move at a constant speed in a fixed direction
         /// </summary>
-        private void SetupAsteroid()
+        private void SetupPaper()
         {
             Texture2D asteroid = game.Content.Load<Texture2D>(
-               "Actors/asteroid-1");
-
-            asteroidSprite = new Sprite(asteroid, 1200, 500)
+               "Actors/paper");
+            Random rnd = new Random();
+            int asteroidDirection1 = rnd.Next(-1, 1);
+            int asteroidDirection2 = rnd.Next(-1, 1);
+            asteroidSpriteP = new Sprite(asteroid, 1200, 400)
             {
-                Direction = new Vector2(-1, 0),
+                Direction = new Vector2(asteroidDirection1, asteroidDirection2),
+                Speed = 100,
+                Scale = 0.2f,
+                Rotation = MathHelper.ToRadians(3),
+                RotationSpeed = 2f,
+            };
+
+        }
+
+        private void SetupRock()
+        {
+            Texture2D asteroid = game.Content.Load<Texture2D>(
+               "Actors/Rock");
+            Random rnd = new Random();
+            int asteroidDirection1 = rnd.Next(-1, 1);
+            int asteroidDirection2 = rnd.Next(-1, 1);
+            asteroidSpriteR = new Sprite(asteroid, 1200, 500)
+            {
+                Direction = new Vector2(asteroidDirection1, asteroidDirection2),
+                Speed = 100,
+                Scale = 0.2f,
+                Rotation = MathHelper.ToRadians(3),
+                RotationSpeed = 2f,
+            };
+
+        }
+
+        private void SetupScissors()
+        {
+            Texture2D asteroid = game.Content.Load<Texture2D>(
+               "Actors/scissors");
+            Random rnd = new Random();
+            int asteroidDirection1 = rnd.Next(-1, 1);
+            int asteroidDirection2 = rnd.Next(-1, 1);
+            asteroidSpriteS = new Sprite(asteroid, 1200, 600)
+            {
+                Direction = new Vector2(asteroidDirection1, asteroidDirection2),
                 Speed = 100,
                 Scale = 0.2f,
                 Rotation = MathHelper.ToRadians(3),
@@ -78,7 +125,7 @@ namespace App05MonoGame.Screens
         private void SetupSpaceShip()
         {
             Texture2D ship = game.Content.Load<Texture2D>(
-               "Actors/GreenShip");
+               "Actors/Ship");
 
             shipSprite = new PlayerSprite(ship, 200, 500)
             {
@@ -113,9 +160,11 @@ namespace App05MonoGame.Screens
             if(!game.Paused)
             {
                 shipSprite.Update(gameTime);
-                asteroidSprite.Update(gameTime);
+                asteroidSpriteR.Update(gameTime);
+                asteroidSpriteP.Update(gameTime);
+                asteroidSpriteS.Update(gameTime);
 
-                if (shipSprite.HasCollided(asteroidSprite) && shipSprite.IsAlive)
+                if ((shipSprite.HasCollided(asteroidSpriteR) || shipSprite.HasCollided(asteroidSpriteP) || shipSprite.HasCollided(asteroidSpriteS)) && shipSprite.IsAlive)
                 {
                     SoundController.PlaySoundEffect(Sounds.Collisions);
 
@@ -136,7 +185,9 @@ namespace App05MonoGame.Screens
             pauseButton.Draw(spriteBatch, gameTime);
 
             shipSprite.Draw(spriteBatch, gameTime);
-            asteroidSprite.Draw(spriteBatch, gameTime);
+            asteroidSpriteR.Draw(spriteBatch, gameTime);
+            asteroidSpriteP.Draw(spriteBatch, gameTime);
+            asteroidSpriteS.Draw(spriteBatch, gameTime);
 
             DrawGameStatus(spriteBatch);
             DrawGameFooter(spriteBatch);
